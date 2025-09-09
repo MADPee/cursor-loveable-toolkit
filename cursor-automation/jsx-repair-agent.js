@@ -8,7 +8,7 @@
  */
 
 import { execSync } from 'child_process';
-import { watchFile } from 'fs';
+import fs, { watchFile } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -151,7 +151,7 @@ class AutomatedJSXRepairAgent {
         }
     }
 
-    handleRealJSXErrors(file, errorOutput) {
+    async handleRealJSXErrors(file, errorOutput) {
         console.log('\n🚨 REAL JSX ERRORS DETECTED!');
         console.log('📋 Error details:', errorOutput.slice(0, 300) + '...');
 
@@ -163,7 +163,7 @@ class AutomatedJSXRepairAgent {
         console.log('3. For complex fixes: Use Haiku agent manually');
 
         // Send desktop notification
-        this.sendDesktopNotification(
+        await this.sendDesktopNotification(
             'JSX Repair Agent',
             `Real JSX errors detected in ${file}. Action required.`
         );
@@ -172,14 +172,32 @@ class AutomatedJSXRepairAgent {
         this.saveErrorReport(file, errorOutput);
     }
 
-    sendDesktopNotification(title, message) {
+    async sendDesktopNotification(title, message) {
+        // 1) Try node-notifier if available (cross-platform)
         try {
-            execSync(`osascript -e 'display notification "${message}" with title "${title}"'`, {
-                stdio: 'pipe'
-            });
-        } catch (error) {
-            console.log('📱 Desktop notification failed (continuing...)');
+            const mod = await import('node-notifier').catch(() => null);
+            if (mod && mod.default) {
+                mod.default.notify({ title, message, timeout: 3 });
+                return;
+            }
+        } catch (_) {
+            // ignore and try platform-specific fallbacks
         }
+
+        // 2) macOS fallback via AppleScript
+        if (process.platform === 'darwin') {
+            try {
+                execSync(`osascript -e 'display notification "${message}" with title "${title}"'`, {
+                    stdio: 'pipe'
+                });
+                return;
+            } catch (_) {
+                // ignore
+            }
+        }
+
+        // 3) Fallback: console info
+        console.log(`📣 Notification: ${title} - ${message}`);
     }
 
     saveErrorReport(file, errorOutput) {
@@ -192,7 +210,6 @@ class AutomatedJSXRepairAgent {
         };
 
         try {
-            const fs = require('fs');
             fs.writeFileSync(
                 path.join(projectRoot, '.cursor', 'jsx-error-report.json'),
                 JSON.stringify(report, null, 2)

@@ -5,7 +5,8 @@
 ### **För NYA projekt:**
 ```bash
 # 1. Kopiera toolkit till ditt projekt
-cp -r ~/Desktop/cursor-loveable-toolkit/* .
+git clone https://github.com/MADPee/cursor-loveable-toolkit.git
+cp -r cursor-loveable-toolkit/* .
 
 # 2. Auto-setup
 node installer.js
@@ -17,7 +18,8 @@ npm run dev:start
 ### **För BEFINTLIGA projekt:**
 ```bash
 # 1. Säker kopiering (skriv inte över befintliga filer)
-cp -r ~/Desktop/cursor-loveable-toolkit/* . --no-clobber
+git clone https://github.com/MADPee/cursor-loveable-toolkit.git
+cp -r cursor-loveable-toolkit/* . --no-clobber
 
 # 2. Merge setup
 node installer.js --merge-existing

@@ -35,10 +35,7 @@
 <summary>💫 <strong>Nytt Projekt</strong> (rekommenderad start)</summary>
 
 ```bash
-# Ett kommando för att komma igång:
-npx cursor-loveable-toolkit@latest init my-project
-
-# Eller manuellt:
+# Manuell installation (rekommenderad just nu):
 git clone https://github.com/MADPee/cursor-loveable-toolkit.git
 cp -r cursor-loveable-toolkit/* your-project/
 cd your-project/
@@ -51,10 +48,6 @@ npm run dev:start
 <summary>🔄 <strong>Existerande Projekt</strong> (säker integration)</summary>
 
 ```bash
-# Snabb installation:
-npx cursor-loveable-toolkit@latest --merge
-
-# Eller manuellt:
 git clone https://github.com/MADPee/cursor-loveable-toolkit.git
 cp -r cursor-loveable-toolkit/* . --no-clobber
 node installer.js --merge-existing

@@ -21,9 +21,8 @@ git clone https://github.com/MADPee/cursor-loveable-toolkit.git
 cd cursor-loveable-toolkit
 npm install
 
-# Aktivera development tools
-npm run dev:setup
-npm run test:watch
+# Aktivera development tools (valfritt i målprojekt efter installation)
+# Kommandon kan skilja sig per målprojekt
 
 # Öppna i VS Code med rekommenderade extensions
 code .
@@ -46,7 +45,7 @@ code .
 #### 💡 Features
 - [Feature requests](https://github.com/MADPee/cursor-loveable-toolkit/issues?q=is:issue+is:open+label:enhancement)
 - [Discussions](https://github.com/MADPee/cursor-loveable-toolkit/discussions/categories/ideas)
-- [Roadmap](https://github.com/MADPee/cursor-loveable-toolkit/projects/1)
+- Roadmap (kommer)
 
 </td>
 <td width="25%">
@@ -99,17 +98,8 @@ graph LR
 ### **2. Kvalitetssäkring**
 
 ```bash
-# Kör alla tester
-npm run test:all
-
-# Validera ändringar
+# Validera ändringar (i toolkitens egen kod)
 npm run validate-smart
-
-# Kontrollera prestanda
-npm run benchmark
-
-# Verifiera dokumentation
-npm run docs:verify
 ```
 
 #### **Checklista före PR:**

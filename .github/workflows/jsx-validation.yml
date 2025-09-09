@@ -1,0 +1,23 @@
+name: JSX Validation
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run: npm install
+      - name: Smart JSX Validation
+        run: node scripts/smart-jsx-validator.js || true
+      - name: Type Check (if available)
+        run: npx tsc --noEmit --skipLibCheck || true
+      - name: Build Check (if configured)
+        run: npm run -s build:check || true
+

@@ -34,16 +34,19 @@ class ToolkitInstaller {
       // Step 3: Setup directories
       await this.setupDirectories();
       
-      // Step 4: Configure package.json
+      // Step 4: Copy automation agents into .cursor/
+      await this.setupAutomationFiles();
+
+      // Step 5: Configure package.json
       await this.configurePackageScripts();
       
-      // Step 5: Setup Git hooks
+      // Step 6: Setup Git hooks
       await this.setupGitHooks();
       
-      // Step 6: Configure VS Code
+      // Step 7: Configure VS Code
       await this.setupVSCode();
       
-      // Step 7: Final verification
+      // Step 8: Final verification
       await this.verifyInstallation();
       
       console.log('✅ Toolkit installation complete!\n');
@@ -112,6 +115,38 @@ class ToolkitInstaller {
     });
     
     console.log('✅ Directories ready\n');
+  }
+
+  async setupAutomationFiles() {
+    console.log('🤖 Copying automation agents to .cursor/...');
+
+    const cursorDir = path.join(this.projectRoot, '.cursor');
+    const sources = [
+      path.join(this.toolkitRoot, 'cursor-automation', 'jsx-repair-agent.js'),
+      path.join(this.toolkitRoot, 'cursor-automation', 'auto-startup.js')
+    ];
+
+    sources.forEach(source => {
+      try {
+        const filename = path.basename(source);
+        const dest = path.join(cursorDir, filename);
+        if (!fs.existsSync(source)) return;
+
+        // Always copy latest if destination missing; otherwise keep existing to
+        // preserve project-specific customization
+        if (!fs.existsSync(dest)) {
+          fs.copyFileSync(source, dest);
+          fs.chmodSync(dest, '755');
+          console.log(`Copied: .cursor/${filename}`);
+        } else {
+          console.log(`Exists: .cursor/${filename} (skipping)`);
+        }
+      } catch (error) {
+        console.log('⚠️  Could not copy automation agent:', error.message);
+      }
+    });
+
+    console.log('✅ Automation agents ready\n');
   }
 
   async configurePackageScripts() {

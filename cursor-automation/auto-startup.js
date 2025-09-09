@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
 /**
- * Auto-Startup Script för KitchenSafe Development
+ * Auto-Startup Script
  * 
  * Startar alla kritiska agenter och övervakningssystem automatiskt
  * när projektet öppnas i Cursor.
  */
 
 import { execSync, spawn } from 'child_process';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -96,7 +97,6 @@ class AutoStartup {
 
         // Check if pre-commit hooks are installed
         try {
-            const fs = require('fs');
             const hookPath = path.join(projectRoot, '.husky', 'pre-commit');
 
             if (fs.existsSync(hookPath)) {
@@ -110,7 +110,6 @@ class AutoStartup {
 
         // Check VS Code tasks
         try {
-            const fs = require('fs');
             const tasksPath = path.join(projectRoot, '.vscode', 'tasks.json');
 
             if (fs.existsSync(tasksPath)) {
