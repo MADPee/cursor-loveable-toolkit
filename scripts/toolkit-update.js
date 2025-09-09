@@ -12,11 +12,16 @@
 import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const projectRoot = process.cwd();
 const args = process.argv.slice(2);
 const command = args[0] || 'check';
 const force = args.includes('--force');
+const RAW_BASE = process.env.TOOLKIT_REPO_RAW || 'https://raw.githubusercontent.com/MADPee/cursor-loveable-toolkit/main/';
 
 function readInstalledVersion() {
   try {
@@ -28,15 +33,40 @@ function readInstalledVersion() {
   }
 }
 
-function getLatestVersion() {
+function httpGet(url) {
   try {
-    // Pröva att läsa version från toolkitens package.json (lokal kopia)
+    // curl (unix/mac)
+    const out = execSync(`curl -sL ${url}`, { stdio: 'pipe' }).toString();
+    return out;
+  } catch {
+    try {
+      // powershell (windows)
+      const out = execSync(`powershell -Command "(Invoke-WebRequest -UseBasicParsing -Uri '${url}').Content"`, { stdio: 'pipe' }).toString();
+      return out;
+    } catch {
+      return null;
+    }
+  }
+}
+
+function getLatestVersion() {
+  // 1) Försök GitHub raw package.json
+  try {
+    const content = httpGet(RAW_BASE + 'package.json');
+    if (content) {
+      const pkg = JSON.parse(content);
+      return { version: pkg.version, source: 'github' };
+    }
+  } catch {}
+
+  // 2) Fallback: lokal kopia (om script körs inne i toolkit repo)
+  try {
     const toolkitRoot = path.resolve(__dirname, '..');
     const pkg = JSON.parse(fs.readFileSync(path.join(toolkitRoot, 'package.json'), 'utf8'));
     return { version: pkg.version, source: 'local' };
-  } catch {
-    return { version: 'unknown', source: 'unknown' };
-  }
+  } catch {}
+
+  return { version: 'unknown', source: 'unknown' };
 }
 
 function copyFileIfMissing(source, dest) {
@@ -60,27 +90,56 @@ function applyUpdate() {
   const toolkitRoot = path.resolve(__dirname, '..');
   const changes = [];
 
-  const mappings = [
-    // automation
-    [path.join(toolkitRoot, 'cursor-automation', 'jsx-repair-agent.js'), path.join(projectRoot, '.cursor', 'jsx-repair-agent.js')],
-    [path.join(toolkitRoot, 'cursor-automation', 'auto-startup.js'), path.join(projectRoot, '.cursor', 'auto-startup.js')],
-    // scripts
-    [path.join(toolkitRoot, 'scripts', 'smart-jsx-validator.js'), path.join(projectRoot, 'scripts', 'smart-jsx-validator.js')],
-    [path.join(toolkitRoot, 'config-templates', 'cursor-config.json'), path.join(projectRoot, '.cursor', 'config.json')]
+  const fileMap = [
+    { rel: 'cursor-automation/jsx-repair-agent.js', dest: path.join(projectRoot, '.cursor', 'jsx-repair-agent.js') },
+    { rel: 'cursor-automation/auto-startup.js', dest: path.join(projectRoot, '.cursor', 'auto-startup.js') },
+    { rel: 'scripts/smart-jsx-validator.js', dest: path.join(projectRoot, 'scripts', 'smart-jsx-validator.js') },
+    { rel: 'config-templates/cursor-config.json', dest: path.join(projectRoot, '.cursor', 'config.json') }
   ];
 
-  for (const [src, dst] of mappings) {
-    const result = copyOrUpdate(src, dst);
-    changes.push({ src, dst, ...result });
+  for (const { rel, dest } of fileMap) {
+    const localSrc = path.join(toolkitRoot, rel);
+    if (fs.existsSync(localSrc)) {
+      const result = copyOrUpdate(localSrc, dest);
+      changes.push({ src: localSrc, dst: dest, ...result });
+      continue;
+    }
+
+    // Remote fallback
+    const remoteUrl = RAW_BASE + rel;
+    const content = httpGet(remoteUrl);
+    if (content) {
+      const alreadyExists = fs.existsSync(dest);
+      if (!alreadyExists || force) {
+        fs.mkdirSync(path.dirname(dest), { recursive: true });
+        fs.writeFileSync(dest, content);
+        changes.push({ src: remoteUrl, dst: dest, copied: true, reason: alreadyExists ? 'updated (download)' : 'created (download)' });
+      } else {
+        changes.push({ src: remoteUrl, dst: dest, copied: false, reason: 'exists' });
+      }
+    } else {
+      changes.push({ src: remoteUrl, dst: dest, copied: false, reason: 'download failed' });
+    }
   }
 
-  // Uppdatera version
+  // Uppdatera version från remote om möjligt, annars lokal
+  let newVersion = '0.0.0';
   try {
-    const pkg = JSON.parse(fs.readFileSync(path.join(toolkitRoot, 'package.json'), 'utf8'));
+    const pkgRaw = httpGet(RAW_BASE + 'package.json');
+    if (pkgRaw) newVersion = JSON.parse(pkgRaw).version;
+  } catch {}
+  if (newVersion === '0.0.0') {
+    try {
+      const pkg = JSON.parse(fs.readFileSync(path.join(toolkitRoot, 'package.json'), 'utf8'));
+      newVersion = pkg.version || newVersion;
+    } catch {}
+  }
+
+  try {
     const info = {
-      name: pkg.name || 'cursor-loveable-toolkit',
-      version: pkg.version || '0.0.0',
-      repository: (pkg.repository && pkg.repository.url) || '',
+      name: 'cursor-loveable-toolkit',
+      version: newVersion,
+      repository: 'https://github.com/MADPee/cursor-loveable-toolkit',
       updatedAt: new Date().toISOString()
     };
     fs.writeFileSync(path.join(projectRoot, '.cursor', 'toolkit-version.json'), JSON.stringify(info, null, 2));
