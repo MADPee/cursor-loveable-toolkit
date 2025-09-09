@@ -75,11 +75,18 @@ Toolkit läser `.cursor/config.json` för att styra vilka filer som övervakas.
 {
   "watchGlobs": [
     "src/**/*.{tsx,jsx}",
-    "src/features/**/ui/**/*.{tsx,jsx}"
+    "src/components/**/*.{tsx,jsx}",
+    "src/pages/**/*.{tsx,jsx}",
+    "src/features/**/ui/**/*.{tsx,jsx}",
+    "app/**/*.{tsx,jsx}",
+    "pages/**/*.{tsx,jsx}"
   ],
   "excludeGlobs": [
     "node_modules/**",
     "dist/**",
+    "build/**",
+    ".next/**",
+    "out/**",
     "**/*.stories.*",
     "**/*.test.*"
   ],
