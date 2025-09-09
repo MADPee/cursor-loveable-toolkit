@@ -68,21 +68,30 @@ Uppdatera `package.json` för ditt build system:
 
 ## 🤖 **Agent Customization**
 
-### **File Watching Customization:**
-Editera `.cursor/jsx-repair-agent.js`:
+### **File Watching Customization (watch-globs):**
+Toolkit läser `.cursor/config.json` för att styra vilka filer som övervakas.
 
-```javascript
-// Anpassa övervakade filer för ditt projekt
-const criticalFiles = [
-  'src/pages/Dashboard.tsx',      // Default
-  'src/components/App.tsx',       // Din main app
-  'src/views/MainView.vue',       // Vue projects
-  'src/containers/AppContainer.jsx'  // Different architecture
-];
-
-// Anpassa polling interval
-const POLLING_INTERVAL = 3000;  // 3 sekunder (default: 5000)
+```json
+{
+  "watchGlobs": [
+    "src/**/*.{tsx,jsx}",
+    "src/features/**/ui/**/*.{tsx,jsx}"
+  ],
+  "excludeGlobs": [
+    "node_modules/**",
+    "dist/**",
+    "**/*.stories.*",
+    "**/*.test.*"
+  ],
+  "pollIntervalMs": 3000
+}
 ```
+
+- `watchGlobs`: vilka mönster som triggar validering
+- `excludeGlobs`: vilka paths som ignoreras
+- `pollIntervalMs`: hur ofta ändringar fångas upp (vid polling)
+
+Konfigurationsfilen skapas automatiskt av installern som `.cursor/config.json` om den saknas. Du kan ändra den när som helst utan att starta om.
 
 ### **Notification Customization:**
 ```javascript

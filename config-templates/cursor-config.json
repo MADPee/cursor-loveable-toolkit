@@ -1,0 +1,19 @@
+{
+  "watchGlobs": [
+    "src/**/*.{tsx,jsx}",
+    "src/**/*.{ts,js}"
+  ],
+  "excludeGlobs": [
+    "node_modules/**",
+    "dist/**",
+    "build/**",
+    "**/*.stories.*",
+    "**/*.test.*",
+    "src/generated/**",
+    "src/vendor/**"
+  ],
+  "pollIntervalMs": 3000,
+  "aiRepairEnabled": false,
+  "costMode": "balanced"
+}
+

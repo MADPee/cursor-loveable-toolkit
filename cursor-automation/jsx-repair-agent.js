@@ -8,7 +8,8 @@
  */
 
 import { execSync } from 'child_process';
-import fs, { watchFile } from 'fs';
+import fs from 'fs';
+import chokidar from 'chokidar';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -31,8 +32,8 @@ class AutomatedJSXRepairAgent {
         // 1. Initial health check
         await this.performHealthCheck();
 
-        // 2. Set up file watchers (selective)
-        this.setupFileWatchers();
+        // 2. Set up file watchers (configurable globs)
+        await this.setupFileWatchers();
 
         // 3. Periodic validation (every 30 minutes)
         this.setupPeriodicValidation();
@@ -65,30 +66,38 @@ class AutomatedJSXRepairAgent {
         }
     }
 
-    setupFileWatchers() {
+    async setupFileWatchers() {
         console.log('👀 Setting up smart file watchers...');
 
-        // Watch critical files that are most likely to have JSX issues
-        const criticalFiles = [
-            'src/pages/Dashboard.tsx',
-            'src/pages/Temperature.tsx',
-            'src/pages/Profile.tsx',
-            'src/components/layout/PageHeader.tsx',
-            'src/components/ui/sync-status-indicator.tsx'
-        ];
+        const configPath = path.join(projectRoot, '.cursor', 'config.json');
+        let watchGlobs = ['src/**/*.{tsx,jsx}'];
+        let excludeGlobs = ['node_modules/**', 'dist/**', 'build/**'];
+        let pollIntervalMs = 5000;
 
-        criticalFiles.forEach(file => {
-            const fullPath = path.join(projectRoot, file);
+        try {
+            if (fs.existsSync(configPath)) {
+                const cfg = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+                if (Array.isArray(cfg.watchGlobs) && cfg.watchGlobs.length > 0) watchGlobs = cfg.watchGlobs;
+                if (Array.isArray(cfg.excludeGlobs)) excludeGlobs = cfg.excludeGlobs;
+                if (typeof cfg.pollIntervalMs === 'number') pollIntervalMs = cfg.pollIntervalMs;
+            }
+        } catch (_) {
+            // use defaults
+        }
 
-            watchFile(fullPath, { interval: 5000 }, (curr, prev) => {
-                if (curr.mtime > prev.mtime) {
-                    console.log(`📝 File changed: ${file}`);
-                    this.queueValidationCheck(file);
-                }
-            });
+        const watcher = chokidar.watch(watchGlobs, {
+            ignored: excludeGlobs,
+            ignoreInitial: true,
+            usePolling: false,
+            interval: pollIntervalMs
         });
 
-        console.log(`✅ Watching ${criticalFiles.length} critical files`);
+        watcher
+            .on('add', file => this.queueValidationCheck(path.relative(projectRoot, file)))
+            .on('change', file => this.queueValidationCheck(path.relative(projectRoot, file)))
+            .on('unlink', () => {});
+
+        console.log(`✅ Watching patterns: ${watchGlobs.join(', ')}`);
     }
 
     setupPeriodicValidation() {

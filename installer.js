@@ -48,6 +48,9 @@ class ToolkitInstaller {
       
       // Step 8: Final verification
       await this.verifyInstallation();
+
+      // Step 9: Ensure default config is present
+      await this.setupConfig();
       
       console.log('✅ Toolkit installation complete!\n');
       this.showQuickStart();
@@ -224,6 +227,27 @@ class ToolkitInstaller {
     }
     
     console.log('✅ VS Code integration ready\n');
+  }
+
+  async setupConfig() {
+    console.log('🧩 Setting up toolkit configuration...');
+
+    const configSource = path.join(this.toolkitRoot, 'config-templates', 'cursor-config.json');
+    const configDestDir = path.join(this.projectRoot, '.cursor');
+    const configDest = path.join(configDestDir, 'config.json');
+
+    try {
+      if (fs.existsSync(configSource) && !fs.existsSync(configDest)) {
+        fs.copyFileSync(configSource, configDest);
+        console.log('Created: .cursor/config.json');
+      } else {
+        console.log('Config already exists (skipping)');
+      }
+    } catch (error) {
+      console.log('⚠️  Could not create .cursor/config.json');
+    }
+
+    console.log('✅ Configuration ready\n');
   }
 
   async verifyInstallation() {
