@@ -1,0 +1,70 @@
+name: 📖 Documentation Improvement
+description: Föreslå förbättringar eller rapportera problem med dokumentationen
+labels: ["documentation", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Tack för att du hjälper oss förbättra dokumentationen!
+        Din feedback hjälper andra utvecklare att använda toolkiten effektivt.
+
+  - type: dropdown
+    id: doc_type
+    attributes:
+      label: Typ av dokumentation
+      options:
+        - README.md
+        - INSTALLATION.md
+        - CONTRIBUTING.md
+        - TROUBLESHOOTING.md
+        - COST_OPTIMIZATION.md
+        - CUSTOMIZATION.md
+        - Kod kommentarer
+        - Annan (specificera nedan)
+    validations:
+      required: true
+
+  - type: textarea
+    id: location
+    attributes:
+      label: Plats i dokumentationen
+      description: Länka till eller beskriv var i dokumentationen problemet finns
+      placeholder: "t.ex. README.md, sektion 'Quick Start'"
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: Nuvarande innehåll
+      description: Vad står det i dokumentationen nu?
+      placeholder: "Kopiera relevant text eller beskriv nuvarande innehåll"
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Föreslagen förbättring
+      description: Hur skulle du vilja förbättra denna del av dokumentationen?
+      placeholder: "t.ex. Lägg till exempel för Windows användare..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: Motivering
+      description: Varför skulle denna ändring vara hjälpsam?
+      placeholder: "Detta skulle hjälpa eftersom..."
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Bekräftelse
+      description: Genom att skicka in detta förslag bekräftar du att
+      options:
+        - label: Jag har kontrollerat att detta inte är en dubblett av ett existerande förslag
+          required: true
+        - label: Jag är villig att hjälpa till med implementationen av denna förbättring
+          required: false

@@ -1,40 +1,223 @@
-# Contributing to Cursor+Loveable Toolkit
+# 🤝 Bidra till Cursor+Loveable Toolkit
 
-## 🎯 Vision
+<div align="center">
 
-Help developers eliminate JSX compatibility issues between Cursor and Loveable.dev with cost-effective automation.
+### 🎯 **Vision**
+Hjälp utvecklare eliminera JSX-kompatibilitetsproblem mellan Cursor och Loveable.dev genom kostnadseffektiv automation.
 
-## 🤝 How to Contribute
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+[![First Timer Friendly](https://img.shields.io/badge/first--timers--only-friendly-blue.svg)](http://www.firsttimersonly.com/)
 
-### 1. **Issue Reports**
-- 🐛 Bug reports with reproduction steps
-- 💡 Feature requests with use cases
-- 📖 Documentation improvements
-- 🔧 Performance optimizations
+</div>
 
-### 2. **Code Contributions**
+## 🚀 **Snabbstart för Contributors**
 
-#### Setup Development Environment:
+### 1️⃣ **Förbered din utvecklingsmiljö**
+
 ```bash
+# Klona och installera
 git clone https://github.com/MADPee/cursor-loveable-toolkit.git
 cd cursor-loveable-toolkit
-npm install glob chokidar husky  # Install test dependencies
+npm install
+
+# Aktivera development tools
+npm run dev:setup
+npm run test:watch
+
+# Öppna i VS Code med rekommenderade extensions
+code .
 ```
 
-#### Test Your Changes:
+### 2️⃣ **Välj ett bidragsområde**
+
+<table>
+<tr>
+<td width="25%">
+
+#### 🐛 Bug Fixes
+- [Öppna issues](https://github.com/MADPee/cursor-loveable-toolkit/issues?q=is:issue+is:open+label:bug)
+- [Good first issues](https://github.com/MADPee/cursor-loveable-toolkit/issues?q=is:issue+is:open+label:"good+first+issue")
+- [Help wanted](https://github.com/MADPee/cursor-loveable-toolkit/issues?q=is:issue+is:open+label:"help+wanted")
+
+</td>
+<td width="25%">
+
+#### 💡 Features
+- [Feature requests](https://github.com/MADPee/cursor-loveable-toolkit/issues?q=is:issue+is:open+label:enhancement)
+- [Discussions](https://github.com/MADPee/cursor-loveable-toolkit/discussions/categories/ideas)
+- [Roadmap](https://github.com/MADPee/cursor-loveable-toolkit/projects/1)
+
+</td>
+<td width="25%">
+
+#### 📖 Documentation
+- [Documentation issues](https://github.com/MADPee/cursor-loveable-toolkit/issues?q=is:issue+is:open+label:documentation)
+- [Examples needed](https://github.com/MADPee/cursor-loveable-toolkit/issues?q=is:issue+is:open+label:"examples+needed")
+- [Translations](https://github.com/MADPee/cursor-loveable-toolkit/issues?q=is:issue+is:open+label:translations)
+
+</td>
+<td width="25%">
+
+#### 🔧 Optimization
+- [Performance issues](https://github.com/MADPee/cursor-loveable-toolkit/issues?q=is:issue+is:open+label:performance)
+- [Cost optimization](https://github.com/MADPee/cursor-loveable-toolkit/issues?q=is:issue+is:open+label:"cost+optimization")
+- [Technical debt](https://github.com/MADPee/cursor-loveable-toolkit/issues?q=is:issue+is:open+label:"technical+debt")
+
+</td>
+</tr>
+</table>
+
+## 💻 **Development Workflow**
+
+### **1. Planera dina ändringar**
+
+```mermaid
+graph LR
+    A[Hitta Issue] --> B[Diskutera Lösning]
+    B --> C[Skapa Branch]
+    C --> D[Implementera]
+    D --> E[Testa]
+    E --> F[PR]
+```
+
+1. 🔍 **Hitta eller skapa ett issue**
+   - Använd issue templates
+   - Tagga med relevanta labels
+   - Diskutera implementation
+
+2. 🌿 **Skapa feature branch**
+   ```bash
+   git checkout -b feature/amazing-improvement
+   ```
+
+3. 💡 **Implementera din lösning**
+   - Följ kodstil (ESLint)
+   - Lägg till tester
+   - Dokumentera ändringar
+
+### **2. Kvalitetssäkring**
+
 ```bash
-# Create test project
-mkdir test-project && cd test-project
-npm init -y
+# Kör alla tester
+npm run test:all
 
-# Install toolkit
-cp -r ../cursor-loveable-toolkit/* .
-node installer.js
-
-# Verify functionality
+# Validera ändringar
 npm run validate-smart
-npm run dev:start
+
+# Kontrollera prestanda
+npm run benchmark
+
+# Verifiera dokumentation
+npm run docs:verify
 ```
+
+#### **Checklista före PR:**
+- [ ] Alla tester passerar
+- [ ] Dokumentation uppdaterad
+- [ ] Changelog uppdaterad
+- [ ] Inga regression bugs
+- [ ] Prestanda verifierad
+
+### **3. Submit Pull Request**
+
+1. 📝 **Förbered PR**
+   ```bash
+   # Uppdatera din branch
+   git fetch origin main
+   git rebase origin/main
+   
+   # Push ändringar
+   git push origin feature/amazing-improvement
+   ```
+
+2. 📋 **PR Template**
+   - Tydlig titel
+   - Länka till issue
+   - Beskriv ändringar
+   - Lista testresultat
+
+3. 👀 **Review Process**
+   - Svara på feedback
+   - Uppdatera kod
+   - Verifiera ändringar
+
+## 🎯 **Contribution Guidelines**
+
+### **Kod Standards**
+
+```typescript
+// ✅ Bra exempel
+export function validateJSX(code: string): ValidationResult {
+  try {
+    // Tydlig error handling
+    const result = await validate(code);
+    logger.debug('Validation complete', { result });
+    return result;
+  } catch (error) {
+    logger.error('Validation failed', { error });
+    throw new ValidationError(error);
+  }
+}
+
+// ❌ Undvik
+export function validate(c) {
+  try {
+    return doValidation(c);
+  } catch(e) {
+    console.log(e);
+  }
+}
+```
+
+### **Testing Standards**
+
+```typescript
+// ✅ Bra test exempel
+describe('JSX Validator', () => {
+  it('should handle complex components', async () => {
+    const input = loadFixture('ComplexComponent.tsx');
+    const result = await validateJSX(input);
+    expect(result.isValid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+});
+```
+
+### **Documentation Standards**
+
+```typescript
+/**
+ * Validerar JSX kod med intelligent error detection
+ * @param code - JSX/TSX kod att validera
+ * @returns ValidationResult med detaljerad feedback
+ * @throws ValidationError om kritiska fel upptäcks
+ * @example
+ * ```typescript
+ * const result = await validateJSX(code);
+ * if (result.isValid) {
+ *   // Fortsätt med build
+ * }
+ * ```
+ */
+```
+
+## 🏆 **Recognition & Rewards**
+
+- 🌟 Featured i README
+- 📢 Erkännande i releases
+- 👕 Swag för större bidrag
+- 💼 Direkt kontakt med team
+
+## 📞 **Få Hjälp**
+
+- 💬 [Discord Community](https://discord.gg/cursor-loveable)
+- 📧 [Email Support](mailto:support@cursor-loveable.dev)
+- 📖 [Contributing FAQ](docs/CONTRIBUTING_FAQ.md)
+
+---
+
+**💪 Tillsammans gör vi utveckling enklare och mer kostnadseffektiv!**
 
 ### 3. **Framework Support**
 Help extend toolkit for:

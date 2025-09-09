@@ -1,0 +1,67 @@
+name: 💡 Feature Request
+description: Föreslå en ny funktion för Cursor+Loveable Toolkit
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Tack för ditt intresse att förbättra Cursor+Loveable Toolkit!
+        Beskriv din idé så detaljerat som möjligt nedan.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Relaterat problem
+      description: Beskriv problemet som din feature skulle lösa
+      placeholder: "Jag blir frustrerad när..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Föreslagen lösning
+      description: Beskriv lösningen du skulle vilja se
+      placeholder: "Det skulle vara bra om toolkiten kunde..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativ du övervägt
+      description: Beskriv alternativa lösningar eller features du övervägt
+      placeholder: "Jag har också tänkt på att..."
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: Påverkan på kostnad/prestanda
+      description: Hur skulle denna feature påverka toolkit's resursanvändning?
+      options:
+        - Minimal påverkan
+        - Liten ökning i resurser/kostnad
+        - Moderat ökning
+        - Betydande ökning
+        - Osäker
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Upplevd prioritet
+      options:
+        - Kritisk (blockerar arbete)
+        - Hög (påverkar produktivitet)
+        - Medium (skulle vara värdefull)
+        - Låg (nice to have)
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Ytterligare kontext
+      description: Lägg till skärmdumpar, kodexempel eller annan kontext här
+      placeholder: "t.ex. mockups, exempel på implementation, etc."

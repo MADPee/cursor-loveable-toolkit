@@ -1,0 +1,86 @@
+name: 🐛 Bug Report
+description: Rapportera ett problem med Cursor+Loveable Toolkit
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Tack för att du tar dig tid att rapportera ett problem! 
+        Fyll i informationen nedan så noggrant som möjligt.
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Utvecklingsmiljö
+      options:
+        - macOS
+        - Windows
+        - Linux
+        - Annan (specificera i beskrivningen)
+    validations:
+      required: true
+
+  - type: input
+    id: node-version
+    attributes:
+      label: Node.js Version
+      placeholder: "t.ex. v16.14.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: framework
+    attributes:
+      label: Framework
+      options:
+        - React
+        - Next.js
+        - Vue.js
+        - Angular
+        - Annan (specificera i beskrivningen)
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Problembeskrivning
+      description: Beskriv problemet så detaljerat som möjligt
+      placeholder: "När jag kör [kommando] så händer [problem]..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steg för att reproducera
+      description: Lista exakta steg för att reproducera problemet
+      placeholder: |
+        1. Kör `npm run ...`
+        2. Öppna filen ...
+        3. Klicka på ...
+        4. Se felmeddelande ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Förväntat beteende
+      description: Vad förväntade du dig skulle hända?
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevanta loggar eller felmeddelanden
+      description: Kopiera och klistra in relevanta loggar. Detta formateras automatiskt som kod.
+      render: shell
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Ytterligare kontext
+      description: Lägg till annan relevant kontext om problemet här
+      placeholder: "t.ex. projektstruktur, konfigurationsfiler, etc."

@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/MADPee/cursor-loveable-toolkit/discussions
+    about: Diskutera idéer, ställ frågor och dela erfarenheter
+  - name: 📚 Documentation
+    url: https://github.com/MADPee/cursor-loveable-toolkit/tree/main/docs
+    about: Läs vår omfattande dokumentation
+  - name: 🤝 Contributing Guidelines
+    url: https://github.com/MADPee/cursor-loveable-toolkit/blob/main/CONTRIBUTING.md
+    about: Lär dig hur du kan bidra till projektet

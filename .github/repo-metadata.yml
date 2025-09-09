@@ -1,0 +1,53 @@
+name: cursor-loveable-toolkit
+description: "🚀 Eliminera JSX-kompatibilitetsproblem mellan Cursor och Loveable.dev. Spara $150-600/månad med intelligent automation. Zero false positives, 30 sekunders setup."
+
+topics:
+  - cursor
+  - loveable
+  - jsx
+  - typescript
+  - react
+  - automation
+  - developer-tools
+  - productivity
+  - cost-optimization
+  - ai-tools
+  - static-analysis
+  - code-quality
+  - continuous-integration
+  - developer-experience
+  - performance-optimization
+
+social_preview:
+  image: .github/assets/social-preview.png
+  alt: "Cursor+Loveable Toolkit - Intelligent JSX Automation"
+
+funding:
+  github: MADPee
+  custom:
+    - "https://opencollective.com/cursor-loveable-toolkit"
+
+features:
+  - "Zero false positives JSX validation"
+  - "Cost-optimized AI usage ($0-2/month)"
+  - "30 seconds setup time"
+  - "Cross-platform support"
+  - "Real-time monitoring"
+  - "Intelligent error detection"
+
+badges:
+  - name: "License"
+    image: "https://img.shields.io/badge/License-MIT-yellow.svg"
+    link: "https://opensource.org/licenses/MIT"
+  
+  - name: "Version"
+    image: "https://img.shields.io/badge/version-1.0.0-blue.svg"
+    link: "CHANGELOG.md"
+  
+  - name: "Platform"
+    image: "https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey.svg"
+    link: "#cross-platform-support"
+  
+  - name: "Community"
+    image: "https://img.shields.io/badge/community-join%20us-brightgreen.svg"
+    link: "https://github.com/MADPee/cursor-loveable-toolkit/discussions"
