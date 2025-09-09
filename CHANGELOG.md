@@ -40,3 +40,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Slack/Teams integration
 - Advanced ML-based error prediction
 
+## [1.1.0] - 2025-09-09
+
+### Added
+- 🔄 GitHub-integrerad uppdateringsmekanism (`toolkit:check-updates`, `toolkit:update`)
+- 🧩 Konfigurerbara watch-globs via `.cursor/config.json`
+- 🧪 GitHub Actions workflow för validering vid push/PR
+
+### Improved
+- 🤖 Agent: ESM-fixar och cross‑platform notifieringsfallback (node-notifier/AppleScript)
+- 🛠️ Installer: Kopierar automationsfiler till `.cursor/` och skriver versionsinfo
+- 📚 Dokumentation: README/INSTALLATION/CUSTOMIZATION/CONTRIBUTING uppdaterade
+
+### Fixed
+- 🧷 Robust versionering i `.cursor/toolkit-version.json` efter uppdatering
+- 🌐 Remote fallback: hämtar filer från GitHub Raw när lokala källor saknas
+

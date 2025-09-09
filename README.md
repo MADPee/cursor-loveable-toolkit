@@ -1,7 +1,7 @@
 # 🚀 Cursor + Loveable.dev Universal Toolkit
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](CHANGELOG.md)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey.svg)](#cross-platform-support)
 [![Community](https://img.shields.io/badge/community-join%20us-brightgreen.svg)](https://github.com/MADPee/cursor-loveable-toolkit/discussions)
 

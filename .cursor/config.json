@@ -1,0 +1,31 @@
+{
+  "watchGlobs": [
+    // React/Vite (KitchenSafe baseline)
+    "src/**/*.{tsx,jsx}",
+    "src/components/**/*.{tsx,jsx}",
+    "src/pages/**/*.{tsx,jsx}",
+    "src/features/**/ui/**/*.{tsx,jsx}",
+
+    // Next.js (app/pages routers)
+    "app/**/*.{tsx,jsx}",
+    "pages/**/*.{tsx,jsx}"
+  ],
+  "excludeGlobs": [
+    "node_modules/**",
+    "dist/**",
+    "build/**",
+    ".next/**",
+    "out/**",
+    "coverage/**",
+    "storybook-static/**",
+    "**/*.stories.*",
+    "**/*.test.*",
+    "**/*.spec.*",
+    "src/generated/**",
+    "src/vendor/**"
+  ],
+  "pollIntervalMs": 3000,
+  "aiRepairEnabled": false,
+  "costMode": "balanced"
+}
+

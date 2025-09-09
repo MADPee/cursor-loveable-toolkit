@@ -1,6 +1,6 @@
 {
   "name": "cursor-loveable-toolkit",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Universal automation toolkit that eliminates JSX compatibility issues between Cursor and Loveable.dev",
   "main": "installer.js",
   "type": "module",
