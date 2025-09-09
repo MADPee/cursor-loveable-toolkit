@@ -11,6 +11,7 @@
 </div>
 
 <p align="center">
+  <a href="https://github.com/MADPee/cursor-loveable-toolkit/discussions/1">What's New</a> •
   <a href="#-quick-start">Quick Start</a> •
   <a href="#-smart-features">Features</a> •
   <a href="#-impact-metrics">Impact</a> •
@@ -323,6 +324,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 📖 [Documentation](docs/)
 - 🐛 [Issues](https://github.com/MADPee/cursor-loveable-toolkit/issues)
 - 💬 [Discussions](https://github.com/MADPee/cursor-loveable-toolkit/discussions)
+- 📢 [Release Announcements](https://github.com/MADPee/cursor-loveable-toolkit/discussions/1)
 - 📧 Create issue for support
 
 ---
