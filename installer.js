@@ -37,6 +37,9 @@ class ToolkitInstaller {
       // Step 4: Copy automation agents into .cursor/
       await this.setupAutomationFiles();
 
+      // Step 4b: Record toolkit version
+      await this.writeToolkitVersion();
+
       // Step 5: Configure package.json
       await this.configurePackageScripts();
       
@@ -169,7 +172,9 @@ class ToolkitInstaller {
       "loveable:prepare": "npm run validate-smart && npm run type-check",
       "loveable:emergency": "git checkout HEAD~1 -- src/ && npm run validate-smart",
       "type-check": "tsc --noEmit --skipLibCheck",
-      "build:check": "vite build --mode development"
+      "build:check": "vite build --mode development",
+      "toolkit:check-updates": "node scripts/toolkit-update.js check",
+      "toolkit:update": "node scripts/toolkit-update.js apply"
     };
     
     if (!packageJson.scripts) {
@@ -186,6 +191,26 @@ class ToolkitInstaller {
     
     fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
     console.log('✅ Package.json configured\n');
+  }
+
+  async writeToolkitVersion() {
+    try {
+      const pkgPath = path.join(this.toolkitRoot, 'package.json');
+      const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+      const versionInfo = {
+        name: pkg.name || 'cursor-loveable-toolkit',
+        version: pkg.version || '0.0.0',
+        repository: (pkg.repository && pkg.repository.url) || 'https://github.com/MADPee/cursor-loveable-toolkit',
+        installedAt: new Date().toISOString()
+      };
+
+      const cursorDir = path.join(this.projectRoot, '.cursor');
+      if (!fs.existsSync(cursorDir)) fs.mkdirSync(cursorDir, { recursive: true });
+      fs.writeFileSync(path.join(cursorDir, 'toolkit-version.json'), JSON.stringify(versionInfo, null, 2));
+      console.log('📝 Recorded toolkit version');
+    } catch (error) {
+      console.log('⚠️  Could not record toolkit version');
+    }
   }
 
   async setupGitHooks() {

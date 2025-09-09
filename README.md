@@ -229,6 +229,10 @@ npm run validate-smart       # Manual validation
 # Emergency
 npm run loveable:emergency   # Instant rollback
 npm run dev:stop            # Stop all monitoring
+
+# Toolkit updates
+npm run toolkit:check-updates  # Check if a newer toolkit version is available
+npm run toolkit:update         # Apply latest toolkit files (non-destructive)
 ```
 
 ## 🎯 **Framework Support**
