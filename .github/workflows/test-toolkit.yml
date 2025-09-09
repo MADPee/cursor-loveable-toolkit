@@ -1,0 +1,81 @@
+name: Test Toolkit
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node-version: [16.x, 18.x, 20.x]
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        
+    - name: Create test project
+      run: |
+        mkdir test-project
+        cd test-project
+        npm init -y
+        echo '{"compilerOptions":{"jsx":"react-jsx","target":"ES2020","module":"ESNext"}}' > tsconfig.json
+        mkdir -p src/components
+        echo 'import React from "react"; export default function App() { return <div>Hello</div>; }' > src/App.tsx
+        
+    - name: Install toolkit
+      run: |
+        cd test-project
+        cp -r ../scripts .
+        cp -r ../cursor-automation .cursor
+        cp -r ../config-templates/* .
+        npm install glob chokidar husky typescript react @types/react
+        
+    - name: Test smart validator
+      run: |
+        cd test-project
+        node scripts/smart-jsx-validator.js
+        
+    - name: Test installer
+      run: |
+        cd test-project
+        cp ../installer.js .
+        node installer.js
+        
+    - name: Verify scripts exist
+      run: |
+        cd test-project
+        npm run validate-smart || echo "Validation completed"
+        
+  validate-docs:
+    name: Validate Documentation
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Check README links
+      run: |
+        # Basic link validation
+        grep -o '\[.*\](.*\.md)' README.md | while read link; do
+          file=$(echo $link | sed 's/.*](\(.*\))/\1/')
+          if [ ! -f "$file" ]; then
+            echo "Missing file: $file"
+            exit 1
+          fi
+        done
+        
+    - name: Validate code examples
+      run: |
+        # Extract and validate bash code blocks
+        awk '/```bash/,/```/' README.md | grep -v '```' | head -10

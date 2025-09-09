@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "validate-smart": "node scripts/smart-jsx-validator.js",
+    "jsx-agent:start": "node .cursor/jsx-repair-agent.js start",
+    "jsx-agent:status": "node .cursor/jsx-repair-agent.js status", 
+    "jsx-agent:stop": "node .cursor/jsx-repair-agent.js stop",
+    "dev:start": "node .cursor/auto-startup.js start",
+    "dev:stop": "node .cursor/auto-startup.js stop",
+    "loveable:prepare": "npm run validate-smart && npm run type-check",
+    "loveable:emergency": "git checkout HEAD~1 -- src/ && npm run validate-smart",
+    "type-check": "tsc --noEmit --skipLibCheck",
+    "build:check": "vite build --mode development"
+  },
+  "devDependencies": {
+    "glob": "^10.3.10",
+    "chokidar": "^3.5.3",
+    "husky": "^8.0.3"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "name": "cursor-loveable-toolkit",
+  "version": "1.0.0",
+  "description": "Universal automation toolkit that eliminates JSX compatibility issues between Cursor and Loveable.dev",
+  "main": "installer.js",
+  "type": "module",
+  "keywords": [
+    "cursor",
+    "loveable.dev", 
+    "jsx",
+    "react",
+    "typescript",
+    "automation",
+    "development-tools",
+    "validation",
+    "ai-development"
+  ],
+  "author": "MADPee",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MADPee/cursor-loveable-toolkit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MADPee/cursor-loveable-toolkit/issues"
+  },
+  "homepage": "https://github.com/MADPee/cursor-loveable-toolkit#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "scripts": {
+    "install-to-project": "node installer.js",
+    "test": "echo 'Run tests in target project after installation'",
+    "validate": "node scripts/smart-jsx-validator.js",
+    "start-agent": "node cursor-automation/jsx-repair-agent.js start"
+  },
+  "dependencies": {
+    "glob": "^10.3.10",
+    "chokidar": "^3.5.3"
+  },
+  "devDependencies": {
+    "husky": "^8.0.3"
+  },
+  "peerDependencies": {
+    "typescript": ">=4.0.0"
+  },
+  "files": [
+    "scripts/",
+    "cursor-automation/", 
+    "config-templates/",
+    "docs/",
+    "installer.js",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
+}
