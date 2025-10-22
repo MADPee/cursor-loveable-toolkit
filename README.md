@@ -332,3 +332,52 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **⭐ Star this repo if it saves you time and money!**
 
 **🚀 Transform your Cursor+Loveable workflow in 30 seconds!**
+
+## 🔒 Security Automation
+
+Denna sektion av toolkiten fokuserar på automatisk säkerhetskontroll för dina projekt.
+
+### Features
+
+- ✅ **Security Validator** - Automatisk kontroll av Edge Functions, RLS policies, input validation
+- ✅ **Edge Function Template** - Säker startpunkt med authentication, rate limiting, SSRF protection
+- ✅ **Cursor Rules** - AI-agent regler för säkerhetskod
+- ✅ **Documentation** - Comprehensive guides för Edge Function säkerhet
+
+### Quick Start
+
+```bash
+# 1. Kopiera från config-templates
+cp config-templates/security-validator.js /din-projekt/scripts/
+cp config-templates/edge-function-template.ts /din-projekt/scripts/
+cp config-templates/cursorrules-security.md /din-projekt/.cursorrules
+
+# 2. Lägg till npm scripts i package.json
+{
+  "scripts": {
+    "security-check": "node scripts/security-validator.js",
+    "security-check:fix": "node scripts/security-validator.js --fix",
+    "edge-function:new": "node scripts/create-edge-function.js"
+  }
+}
+
+# 3. Setup pre-commit hook
+npx husky add .husky/pre-commit
+echo "npm run security-check || exit 1" >> .husky/pre-commit
+
+# 4. Test
+npm run security-check
+```
+
+### Documentation
+
+- **[SECURITY_AUTOMATION.md](./docs/SECURITY_AUTOMATION.md)** - Setup guide och overview
+- **[EDGE_FUNCTION_SECURITY.md](./docs/EDGE_FUNCTION_SECURITY.md)** - Detaljerad best practices
+- **[SECURITY_CHECKLIST.md](./guides/SECURITY_CHECKLIST.md)** - Pre-deployment checklista
+- **[config-templates/cursorrules-security.md](./config-templates/cursorrules-security.md)** - AI-agent regler
+- **[config-templates/security-validator.js](./config-templates/security-validator.js)** - Valideringsskript
+- **[config-templates/edge-function-template.ts](./config-templates/edge-function-template.ts)** - Säker template
+
+### Related
+
+Se även [startup-template-safe-scripts](https://github.com/MADPee/startup-template-safe-scripts) för installation guide.
